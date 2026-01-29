@@ -1,11 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Gandalf Alpha</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <h1>Form- och lägetoleranser<br>ISO 1101:2017</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Tolerans</th>
+                <th>Symbol</th>
+                <th>Referens</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Form -->
+            <tr>
+                <td rowspan="4" class="category">Form</td>
+                <td class="tolerance">Rakhet</td>
+                <td class="symbol">&#x2500;</td>
+                <td class="reference">Nej</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Planhet</td>
+                <td class="symbol">&#x25B1;</td>
+                <td class="reference">Nej</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Rundhet</td>
+                <td class="symbol">&#x25CB;</td>
+                <td class="reference">Nej</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Cylindricitet</td>
+                <td class="symbol">&#x232D;</td>
+                <td class="reference">Nej</td>
+            </tr>
+
+            <!-- Riktning -->
+            <tr>
+                <td rowspan="3" class="category">Riktning</td>
+                <td class="tolerance">Parallellitet</td>
+                <td class="symbol">//</td>
+                <td class="reference">Ja</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Vinkelräthet</td>
+                <td class="symbol">&#x22A5;</td>
+                <td class="reference">Ja</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Vinkelriktighet</td>
+                <td class="symbol">&#x2220;</td>
+                <td class="reference">Ja</td>
+            </tr>
+
+            <!-- Läge -->
+            <tr>
+                <td rowspan="4" class="category">Läge</td>
+                <td class="tolerance">Lägeriktighet</td>
+                <td class="symbol">&#x2316;</td>
+                <td class="reference">Ja (Nej)</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Koaxialitet</td>
+                <td class="symbol">&#x25CE;</td>
+                <td class="reference">Ja</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Koncentricitet</td>
+                <td class="symbol">
+                    <div style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1;">
+                        <span style="font-size: 10px;">ACS</span>
+                        <span>&#x25CE;</span>
+                    </div>
+                </td>
+                <td class="reference">Ja</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Symmetri</td>
+                <td class="symbol">&#x232F;</td>
+                <td class="reference">Ja</td>
+            </tr>
+
+            <!-- Kast -->
+            <tr>
+                <td rowspan="2" class="category">Kast</td>
+                <td class="tolerance">Cirkulärt kast</td>
+                <td class="symbol">&#x2197;</td>
+                <td class="reference">Ja</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Totalkast</td>
+                <td class="symbol">&#x2330;</td>
+                <td class="reference">Ja</td>
+            </tr>
+
+            <!-- Profil -->
+            <tr>
+                <td rowspan="2" class="category">Profil</td>
+                <td class="tolerance">Linjeprofil</td>
+                <td class="symbol">&#x2312;</td>
+                <td class="reference">Ja/Nej</td>
+            </tr>
+            <tr>
+                <td class="tolerance">Ytprofil</td>
+                <td class="symbol">&#x2313;</td>
+                <td class="reference">Ja/Nej</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <footer>
+        <a href="http://www.ariadne-eng.se">www.ariadne-eng.se</a>
+        <div class="logo">
+            <span class="logo-icon"></span>
+            ARIADNE <span style="font-weight: normal; font-size: 14px; margin-left: 5px;">ENGINEERING AB</span>
+        </div>
+    </footer>
 </body>
 </html>
