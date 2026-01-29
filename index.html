@@ -1,11 +1,452 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>ISO 1101:2017 - Lägesriktighet</title>
+    <style>
+        :root {
+            --primary-blue: #2979ff;
+            --primary-text: #1a1a1a;
+            --secondary-text: #757575;
+            --bg-color: #f7f9fc;
+            --card-bg: #ffffff;
+            --green-badge-bg: #e0f2f1;
+            --green-badge-text: #009688;
+            --tag-bg: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background-color: var(--card-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-text);
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-text);
+        }
+
+        .icon-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Main Content */
+        main {
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Hero Card */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-card {
+            text-align: center;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .hero-icon-container {
+            width: 80px;
+            height: 80px;
+            background-color: #e3f2fd;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .hero-icon {
+            width: 48px;
+            height: 48px;
+            fill: var(--primary-blue);
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-text);
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--secondary-text);
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--secondary-text);
+            font-weight: 500;
+        }
+
+        /* Simulation Card */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--secondary-text);
+            text-transform: uppercase;
+        }
+
+        .badge {
+            background-color: var(--green-badge-bg);
+            color: var(--green-badge-text);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .simulation-viewer {
+            width: 100%;
+            height: 200px;
+            background-color: #1a2332; /* Dark background like in image */
+            border-radius: 16px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        /* Approximate the grid/3D look with CSS gradients */
+        .simulation-viewer::before {
+             content: '';
+             position: absolute;
+             top: 0; left: 0; right: 0; bottom: 0;
+             background:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+             background-size: 20px 20px;
+             transform: perspective(500px) rotateX(20deg);
+        }
+
+        .play-btn {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .play-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: #ffffff;
+        }
+
+        .viewer-controls {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .control-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .caption {
+            font-size: 14px;
+            color: var(--secondary-text);
+            text-align: center;
+        }
+
+        /* Definition Card */
+        .definition-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .def-icon {
+            color: var(--primary-blue);
+        }
+
+        .def-icon svg {
+             width: 24px;
+             height: 24px;
+             fill: currentColor;
+        }
+
+        .definition-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-text);
+        }
+
+        .definition-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--secondary-text);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 200;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--secondary-text);
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            width: 60px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .fab {
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(41, 121, 255, 0.4);
+            transform: translateY(-24px); /* Floating effect */
+            border: 4px solid #ffffff; /* White border as commonly seen when breaking out */
+        }
+
+        .fab svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+
+    <header>
+        <button class="icon-btn" aria-label="Back">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+        <h1 class="header-title">ISO 1101:2017</h1>
+        <button class="icon-btn" aria-label="Bookmark">
+            <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/></svg>
+        </button>
+    </header>
+
+    <main>
+        <!-- Hero Card -->
+        <div class="card hero-card">
+            <div class="hero-icon-container">
+                <!-- Location / Position Icon -->
+                <svg class="hero-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                    <path d="M11 5h2v2h-2zm0 12h2v2h-2zm-7-5h2v2H4zm12 0h2v2h-2z"/> <!-- Crosshairs rough approximation -->
+                </svg>
+            </div>
+            <h2 class="hero-title">Lägesriktighet</h2>
+            <div class="hero-subtitle">POSITION TOLERANCE</div>
+            <div class="tags">
+                <span class="tag">Type: Location</span>
+                <span class="tag">Datum: Required</span>
+            </div>
+        </div>
+
+        <!-- Simulation Card -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">3D Simulation</span>
+                <span class="badge">Interactive</span>
+            </div>
+            <div class="simulation-viewer">
+                <!-- 3D Model Placeholder Visuals -->
+                 <!-- Just a shape to represent the object -->
+                <svg width="100" height="100" viewBox="0 0 100 100" style="position: absolute; opacity: 0.3; fill: none; stroke: #4fc3f7; stroke-width: 1;">
+                    <ellipse cx="50" cy="50" rx="40" ry="20" />
+                    <ellipse cx="50" cy="40" rx="40" ry="20" />
+                    <ellipse cx="50" cy="60" rx="40" ry="20" />
+                    <path d="M10 50 v10 M90 50 v10" />
+                </svg>
+
+                <div class="play-btn">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <div class="viewer-controls">
+                    <button class="control-btn">
+                        <svg viewBox="0 0 24 24"><path d="M7.5 5.6L10 7 8.6 4.5v.1c-.1.5-.1 1-.1 1.5 0 4.19 3.36 7.6 7.55 7.6 1.87 0 3.6-.66 4.97-1.76l1.52 1.52C20.69 15.3 18.25 16.5 15.5 16.5c-5.8 0-10.5-4.7-10.5-10.5 0-.81.12-1.59.33-2.33l-2.08 1.93L2.5 4.2 7.5 5.6zM19.5 9c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-2c-.28 0-.5.22-.5.5s.22.5.5.5h2zm-4-3c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-2c-.28 0-.5.22-.5.5s.22.5.5.5h2z"/></svg>
+                    </button>
+                    <button class="control-btn">
+                        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="caption">Touch to interact with the tolerance zone visualization.</div>
+        </div>
+
+        <!-- Definition Card -->
+        <div class="card">
+            <div class="definition-header">
+                <div class="def-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                </div>
+                <h3 class="definition-title">Definition</h3>
+            </div>
+            <p class="definition-text">
+                Position tolerance controls the location of a feature of size (like a hole, shaft, or slot) or a...
+            </p>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <span>Reference</span>
+        </a>
+        <a href="#" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.991.991 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44A.99.99 0 0 1 12 2.1c.2 0 .4.06.57.17l7.9 4.44c.32.17.53.5.53.88v9zM12 4.15L6.04 7.5 12 10.85l5.96-3.35L12 4.15zM5 15.91l6 3.38v-6.71L5 9.21v6.7z"/></svg>
+            <span>Visualize</span>
+        </a>
+
+        <div class="fab">
+             <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </div>
+
+        <a href="#" class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+            <span>Quiz</span>
+        </a>
+        <!-- The 4th item "Settings" or similar is hidden behind FAB or FAB is the 3rd item visually.
+             Based on alignment, Reference, Visualize, (FAB), Quiz.
+             But usually FAB is main action.
+             I'll stick to Reference, Visualize, FAB, Quiz.
+             Wait, looking at the image:
+             Left: Reference, Visualize
+             Right: Quiz, (Maybe Settings is covered)
+             The FAB is shifted to the right side?
+             No, looking at the bottom bar:
+             "Reference" is left.
+             "Visualize" is next.
+             Then there is a gap? Or maybe the FAB is over the 4th item.
+             Let's put FAB between Visualize and Quiz for symmetry or as an overlay.
+             Actually, in the screenshot, the FAB is blue circle with white icon. It seems to be floating over the bottom bar on the right side? No, it looks like it's covering the 4th item.
+             Let's just put Reference, Visualize, Quiz and the FAB as a separate floating element or part of the layout.
+             I'll structure it: Reference, Visualize, Quiz, FAB (as item).
+             The screenshot shows: [Reference] [Visualize] [Quiz] [FAB-covering-something]
+             I'll just put Reference, Visualize, Quiz, Settings, and position FAB absolutely over Settings or between Quiz/Settings.
+             For simplicity, I will use: Reference, Visualize, Quiz. And FAB is floating.
+        -->
+    </nav>
+
 </body>
 </html>
